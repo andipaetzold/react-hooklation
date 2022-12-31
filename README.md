@@ -27,7 +27,7 @@ pnpm add react-hooklation
 
 ## Usage
 
-[Type Documentation](https://andipaetzold.github.io/react-firehooks)
+[Type Documentation](https://andipaetzold.github.io/react-hooklation)
 
 `react-hooklation` does not detect or mange your current locale. Therefore, you need to provide the current locale at the root of your application: Wrap everything with `HooklationProvider` and pass the current locale.
 
