@@ -1,0 +1,83 @@
+{
+  "name": "react-hooklation",
+  "version": "0.0.1",
+  "description": "Lightweight, dependency-free and well-typed React internationalization library",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andipaetzold/react-hooklation.git"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "translate",
+    "translation",
+    "internationalization"
+  ],
+  "author": {
+    "name": "Andi Pätzold",
+    "email": "github@andipaetzold.com",
+    "url": "https://github.com/andipaetzold"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andipaetzold/react-hooklation/issues"
+  },
+  "homepage": "https://github.com/andipaetzold/react-hooklation#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "6.0.2",
+    "@semantic-release/git": "10.0.1",
+    "@testing-library/react": "13.4.0",
+    "@tsconfig/recommended": "1.0.1",
+    "@types/react": "18.0.26",
+    "@typescript-eslint/eslint-plugin": "5.47.1",
+    "@typescript-eslint/parser": "5.47.1",
+    "@vitejs/plugin-react": "3.0.0",
+    "@vitest/coverage-c8": "0.26.2",
+    "eslint": "8.30.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "7.31.11",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "happy-dom": "8.1.1",
+    "husky": "8.0.2",
+    "lint-staged": "13.1.0",
+    "prettier": "2.8.1",
+    "react": "18.2.0",
+    "rimraf": "3.0.2",
+    "semantic-release": "19.0.5",
+    "typedoc": "0.23.23",
+    "typescript": "4.9.4",
+    "vite": "4.0.3",
+    "vitest": "0.26.2"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "rimraf lib && tsc",
+    "test": "vitest",
+    "typecheck": "vitest typecheck",
+    "semantic-release": "semantic-release",
+    "typedoc": "typedoc",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "lint": "eslint 'src/**/*.{ts,tsx}' --fix"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint"
+    ]
+  }
+}
