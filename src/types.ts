@@ -4,9 +4,6 @@
  * KeyPart: 'x', 'y', 'z' of 'x.y.z'
  */
 
-// Constants
-export type KeyPartSeparator = ".";
-
 // Exported types
 export interface HooklationContextValue {
   locale: string;
@@ -16,6 +13,15 @@ export type HooklationTranslationValue = HooklationTranslation | string;
 export interface HooklationTranslation {
   [locale: string]: HooklationTranslationValue;
 }
+
+export interface HooklationTranslations<
+  TTranslation extends HooklationTranslation
+> {
+  [locale: string]: TTranslation;
+}
+
+// Constants
+export type KeyPartSeparator = ".";
 
 // Key
 export type Key<TTranslation extends HooklationTranslation> = {
@@ -60,16 +66,10 @@ export type PrefixedKey<
         : never;
     }[Key<TTranslation>];
 
-export interface HooklationTranslations<
-  TTranslation extends HooklationTranslation
-> {
-  [locale: string]: TTranslation;
-}
-
-type IsLastKeyPart<TKeyPartValue extends HooklationTranslationValue> =
+export type IsLastKeyPart<TKeyPartValue extends HooklationTranslationValue> =
   TKeyPartValue extends string ? true : IsPluralValue<TKeyPartValue>;
 
-type PluralValueKeyPart = `${"=" | ">="}${number}`;
+export type PluralValueKeyPart = `${"=" | ">="}${number}`;
 
 /**
  * IsPluralValue
@@ -78,7 +78,7 @@ type PluralValueKeyPart = `${"=" | ">="}${number}`;
  * - every key of TValue matches `PluralValueKeyPart`, and
  * - all values are string
  */
-type IsPluralValue<TValue extends HooklationTranslationValue> = {
+export type IsPluralValue<TValue extends HooklationTranslationValue> = {
   [K in keyof TValue]: TValue[K] extends string
     ? K extends PluralValueKeyPart
       ? true
@@ -89,5 +89,5 @@ type IsPluralValue<TValue extends HooklationTranslationValue> = {
   : false;
 
 // Utility types
-type IsNever<T> = [T] extends [never] ? true : false;
-type ToString<T> = T & string;
+export type IsNever<T> = [T] extends [never] ? true : false;
+export type ToString<T> = T & string;
