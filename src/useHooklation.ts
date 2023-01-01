@@ -8,6 +8,7 @@ import {
   PrefixedKey,
 } from "./types.js";
 import { useHooklationContext } from "./useHooklationContext.js";
+import { get } from "./get.js";
 
 export interface UseHooklationOptions<
   TTranslation extends HooklationTranslation,
@@ -60,17 +61,7 @@ function getTranslation(
   key: string,
   count: number
 ): string | undefined {
-  const keyParts = key.split(SEPARATOR);
-
-  let result: HooklationTranslation | string = translation;
-  for (const keyPart of keyParts) {
-    if (typeof result === "string") {
-      return;
-    }
-
-    result = result[keyPart];
-  }
-
+  let result = get<HooklationTranslation | string>(translation, key);
   if (typeof result === "string") {
     return result;
   }
