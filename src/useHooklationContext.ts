@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import { hooklationContext as context } from "./context.js";
-import { HooklationContextValue } from "./types.js";
+import { context, ContextValue } from "./context.js";
 
-export function useHooklationContext(): HooklationContextValue {
+export function useHooklationContext(): ContextValue {
   const value = useContext(context);
   if (!value) {
     throw new Error(`Must be used within 'HooklationProvider'.`);

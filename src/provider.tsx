@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { hooklationContext as context } from "./context.js";
+import { context } from "./context.js";
 
 export interface HooklationProviderProps {
   locale: string;

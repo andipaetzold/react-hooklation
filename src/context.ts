@@ -1,6 +1,7 @@
 import { createContext } from "react";
-import { HooklationContextValue } from "./types.js";
 
-export const hooklationContext = createContext<
-  HooklationContextValue | undefined
->(undefined);
+export interface ContextValue {
+  locale: string;
+}
+
+export const context = createContext<ContextValue | undefined>(undefined);

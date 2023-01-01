@@ -5,10 +5,6 @@
  */
 
 // Exported types
-export interface HooklationContextValue {
-  locale: string;
-}
-
 export type HooklationTranslationValue = HooklationTranslation | string;
 export interface HooklationTranslation {
   [locale: string]: HooklationTranslationValue;
