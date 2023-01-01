@@ -54,7 +54,7 @@ describe("t", () => {
     expect(result.current("greeting.hello")).toBe("greeting.hello");
   });
 
-  it.only("returns key for unknown key", () => {
+  it("returns key for unknown key", () => {
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("en"),
     });
