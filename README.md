@@ -95,6 +95,30 @@ Which translation is selected?
 1. exact match (`=2` or `=50`)
 2. ranged match (`>=2` or `>=50`) that starts closest to `count`
 
+### Interpolation
+
+```javascript
+const en = {
+  greeting: "Hello {{ name }}",
+  greetBestFriend: "Hi {{ friends.0.name }}",
+};
+const de = {
+  greeting: "Hallo {{ name }}",
+  greetBestFriend: "Servus {{ friends.0.name }}",
+};
+
+function Component() {
+  const t = useHooklation({ en, de });
+
+  return (
+    <>
+      {t("greeting", { name: "Andi" })}
+      {t("greetBestFriend", { friends: [{ name: "Felix" }] })}
+    </>
+  );
+}
+```
+
 ### Component-specific hooks
 
 You don't have to import the translations into every single component when using `useHooklation`. Instead, you can create a component-specific hook using `createHooklationHook`:

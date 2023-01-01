@@ -15,6 +15,7 @@ const translations = {
       ">=2": "2+ Potatoes",
       ">=5": "Many Potatoes",
     },
+    fullGreeting: "Hey {{ name }}",
   },
   de: {
     title: "Willkommen!", // title
@@ -26,6 +27,7 @@ const translations = {
       ">=2": "2+ Kartoffeln",
       ">=5": "Viele Kartoffeln",
     },
+    fullGreeting: "Hallo {{ name }}",
   },
 };
 
@@ -110,5 +112,13 @@ describe("t", () => {
     expect(result.current("potato", { count: 4 })).toBe("2+ Kartoffeln");
     expect(result.current("potato", { count: 5 })).toBe("Viele Kartoffeln");
     expect(result.current("potato", { count: 6 })).toBe("Viele Kartoffeln");
+  });
+
+  it("interpolates", () => {
+    const { result } = renderHook(() => useHooklation(translations), {
+      wrapper: createWrapper("de"),
+    });
+
+    expect(result.current("fullGreeting", { name: "Andi" })).toBe("Hallo Andi");
   });
 });

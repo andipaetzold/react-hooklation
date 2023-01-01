@@ -1,14 +1,15 @@
 import { useCallback } from "react";
 import { SEPARATOR } from "./constants.js";
+import { get } from "./get.js";
+import { getPluralKeyPart } from "./getPluralKeyPart.js";
 import {
   HooklationTranslation,
   HooklationTranslations,
   KeyPrefix,
-  PluralValueKeyPart,
   PrefixedKey,
 } from "./types.js";
 import { useHooklationContext } from "./useHooklationContext.js";
-import { get } from "./get.js";
+import { interpolate } from "./interpolate.js";
 
 export interface UseHooklationOptions<
   TTranslation extends HooklationTranslation,
@@ -20,12 +21,12 @@ export interface UseHooklationOptions<
 export type UseHooklationReturn<
   TTranslation extends HooklationTranslation,
   TPrefix extends KeyPrefix<TTranslation>
-> = (
-  key: PrefixedKey<TTranslation, TPrefix>,
-  context?: {
-    count?: number | [number];
-  }
-) => string;
+> = (key: PrefixedKey<TTranslation, TPrefix>, context?: Context) => string;
+
+interface Context {
+  readonly count?: number | [number];
+  readonly [vars: string]: unknown;
+}
 
 export function useHooklation<
   TTranslation extends HooklationTranslation,
@@ -38,23 +39,19 @@ export function useHooklation<
   const translation = translations[locale];
 
   return useCallback(
-    (key, { count = 0 } = {}) => {
+    (key, context: Context = {}) => {
       const fullKey = prefix ? `${prefix}${SEPARATOR}${key}` : key;
       if (!translation) {
         onLocaleNotFound?.(locale);
         return fullKey;
       }
 
-      const result = getTranslation(
-        translation,
-        fullKey,
-        typeof count === "number" ? [count] : count
-      );
+      const result = getTranslation(translation, fullKey, context);
       if (result === undefined) {
         onKeyNotFound?.(fullKey);
         return fullKey;
       }
-      return result;
+      return interpolate(result, context);
     },
     [prefix, translation, onKeyNotFound, onLocaleNotFound, locale]
   );
@@ -63,7 +60,7 @@ export function useHooklation<
 function getTranslation(
   translation: HooklationTranslation,
   key: string,
-  count: [number]
+  context: Context
 ): string | undefined {
   let result = get<HooklationTranslation | string>(translation, key);
   if (typeof result === "string") {
@@ -75,7 +72,9 @@ function getTranslation(
   }
 
   // Plural
-  const lastKeyPart = getPluralTranslationKeyPart(Object.keys(result), count);
+  const count =
+    (Array.isArray(context.count) ? context.count[0] : context.count) ?? 0;
+  const lastKeyPart = getPluralKeyPart(Object.keys(result), count);
   if (!lastKeyPart) {
     return;
   }
@@ -87,31 +86,4 @@ function getTranslation(
   }
 
   return result;
-}
-
-function getPluralTranslationKeyPart(
-  keyParts: string[],
-  [count]: [number]
-): PluralValueKeyPart | undefined {
-  // exact match
-  const exactMatch = `=${count}` as const;
-  if (keyParts.includes(exactMatch)) {
-    return exactMatch;
-  }
-
-  // range match
-  const smallestRangeStart = keyParts
-    .filter((keyPart) => !keyPart.startsWith("="))
-    .map((rangeStart) => +rangeStart.slice(2))
-    .filter((rangeStart) => !Number.isNaN(rangeStart))
-    .sort()
-    .reverse()
-    .find((rangeStart) => rangeStart <= count);
-
-  if (smallestRangeStart !== undefined) {
-    return `>=${smallestRangeStart}`;
-  }
-
-  // no match
-  return undefined;
 }
