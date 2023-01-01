@@ -106,8 +106,7 @@ function getPluralTranslationKeyPart(
   // range match
   const smallestRangeStart = keyParts
     .filter((keyPart) => !keyPart.startsWith("="))
-    .map((rangeStart) => rangeStart.slice(2))
-    .map((rangeStart) => +rangeStart)
+    .map((rangeStart) => +rangeStart.slice(2))
     .filter((rangeStart) => !Number.isNaN(rangeStart))
     .sort()
     .reverse()
