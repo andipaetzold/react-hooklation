@@ -33,34 +33,35 @@ export function useHooklation<
   translations: HooklationTranslations<TTranslation>,
   { prefix }: UseHooklationOptions<TTranslation, TPrefix> = {}
 ): UseHooklationReturn<TTranslation, TPrefix> {
-  const { locale } = useHooklationContext();
+  const { locale, onKeyNotFound, onLocaleNotFound } = useHooklationContext();
   const translation = translations[locale];
 
   return useCallback(
     (key, { count = 0 } = {}) => {
       const fullKey = prefix ? `${prefix}${SEPARATOR}${key}` : key;
       if (!translation) {
-        // TODO: warning
+        onLocaleNotFound?.(locale);
         return fullKey;
       }
 
-      return getTranslation(translation, fullKey, count);
+      return getTranslation(translation, fullKey, count, onKeyNotFound);
     },
-    [translation, prefix]
+    [prefix, translation, onKeyNotFound, onLocaleNotFound, locale]
   );
 }
 
 function getTranslation(
   translation: HooklationTranslation,
   key: string,
-  count: number
+  count: number,
+  onKeyNotFound?: (key: string) => void
 ): string {
   const keyParts = key.split(SEPARATOR);
 
   let result: HooklationTranslationValue = translation;
   for (const keyPart of keyParts) {
     if (typeof result === "string") {
-      // TODO: warning
+      onKeyNotFound?.(key);
       return key;
     }
 
@@ -72,21 +73,21 @@ function getTranslation(
   }
 
   if (result === undefined) {
-    // TODO: warning
+    onKeyNotFound?.(key);
     return key;
   }
 
   // Plural
   const lastKeyPart = getPluralTranslationKeyPart(Object.keys(result), count);
   if (lastKeyPart === undefined) {
-    // TODO: warning
+    onKeyNotFound?.(key);
     return key;
   }
 
   result = result[lastKeyPart];
 
   if (!(typeof result === "string")) {
-    // TODO: warning
+    onKeyNotFound?.(key);
     return key;
   }
 

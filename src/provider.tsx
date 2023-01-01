@@ -1,13 +1,11 @@
 import { PropsWithChildren } from "react";
-import { context } from "./context.js";
+import { context, ContextValue } from "./context.js";
 
-export interface HooklationProviderProps {
-  locale: string;
-}
+export type HooklationProviderProps = ContextValue;
 
 export function HooklationProvider({
-  locale,
   children,
+  ...props
 }: PropsWithChildren<HooklationProviderProps>) {
-  return <context.Provider value={{ locale }}>{children}</context.Provider>;
+  return <context.Provider value={props}>{children}</context.Provider>;
 }
