@@ -23,7 +23,7 @@ export type UseHooklationReturn<
 > = (
   key: PrefixedKey<TTranslation, TPrefix>,
   context?: {
-    count?: number;
+    count?: number | [number];
   }
 ) => string;
 
@@ -45,7 +45,11 @@ export function useHooklation<
         return fullKey;
       }
 
-      const result = getTranslation(translation, fullKey, count);
+      const result = getTranslation(
+        translation,
+        fullKey,
+        typeof count === "number" ? [count] : count
+      );
       if (result === undefined) {
         onKeyNotFound?.(fullKey);
         return fullKey;
@@ -59,7 +63,7 @@ export function useHooklation<
 function getTranslation(
   translation: HooklationTranslation,
   key: string,
-  count: number
+  count: [number]
 ): string | undefined {
   let result = get<HooklationTranslation | string>(translation, key);
   if (typeof result === "string") {
@@ -87,7 +91,7 @@ function getTranslation(
 
 function getPluralTranslationKeyPart(
   keyParts: string[],
-  count: number
+  [count]: [number]
 ): PluralValueKeyPart | undefined {
   // exact match
   const exactMatch = `=${count}` as const;
