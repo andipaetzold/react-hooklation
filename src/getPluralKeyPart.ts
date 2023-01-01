@@ -24,5 +24,4 @@ export function getPluralKeyPart(
   }
 
   // no match
-  return undefined;
 }

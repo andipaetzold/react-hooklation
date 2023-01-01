@@ -6,11 +6,10 @@ export function get<T = unknown>(obj: unknown, key: string): T | undefined {
   let result: any = obj;
   for (const keyPart of keyParts) {
     // replace with Object.hasOwn in the future
-    if (result.hasOwnProperty(keyPart)) {
-      result = result[keyPart];
-    } else {
-      return undefined;
+    if (!result.hasOwnProperty(keyPart)) {
+      return;
     }
+    result = result[keyPart];
   }
 
   return result as T;
