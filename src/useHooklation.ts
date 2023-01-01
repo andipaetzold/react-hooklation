@@ -3,8 +3,8 @@ import { SEPARATOR } from "./constants.js";
 import {
   HooklationTranslation,
   HooklationTranslations,
-  HooklationTranslationValue,
   KeyPrefix,
+  PluralValueKeyPart,
   PrefixedKey,
 } from "./types.js";
 import { useHooklationContext } from "./useHooklationContext.js";
@@ -44,7 +44,12 @@ export function useHooklation<
         return fullKey;
       }
 
-      return getTranslation(translation, fullKey, count, onKeyNotFound);
+      const result = getTranslation(translation, fullKey, count);
+      if (result === undefined) {
+        onKeyNotFound?.(fullKey);
+        return fullKey;
+      }
+      return result;
     },
     [prefix, translation, onKeyNotFound, onLocaleNotFound, locale]
   );
@@ -53,16 +58,14 @@ export function useHooklation<
 function getTranslation(
   translation: HooklationTranslation,
   key: string,
-  count: number,
-  onKeyNotFound?: (key: string) => void
-): string {
+  count: number
+): string | undefined {
   const keyParts = key.split(SEPARATOR);
 
-  let result: HooklationTranslationValue = translation;
+  let result: HooklationTranslation | string = translation;
   for (const keyPart of keyParts) {
     if (typeof result === "string") {
-      onKeyNotFound?.(key);
-      return key;
+      return;
     }
 
     result = result[keyPart];
@@ -72,23 +75,20 @@ function getTranslation(
     return result;
   }
 
-  if (result === undefined) {
-    onKeyNotFound?.(key);
-    return key;
+  if (!result) {
+    return;
   }
 
   // Plural
   const lastKeyPart = getPluralTranslationKeyPart(Object.keys(result), count);
-  if (lastKeyPart === undefined) {
-    onKeyNotFound?.(key);
-    return key;
+  if (!lastKeyPart) {
+    return;
   }
 
   result = result[lastKeyPart];
 
-  if (!(typeof result === "string")) {
-    onKeyNotFound?.(key);
-    return key;
+  if (typeof result !== "string") {
+    return;
   }
 
   return result;
@@ -97,9 +97,9 @@ function getTranslation(
 function getPluralTranslationKeyPart(
   keyParts: string[],
   count: number
-): string | undefined {
+): PluralValueKeyPart | undefined {
   // exact match
-  const exactMatch = `=${count}`;
+  const exactMatch = `=${count}` as const;
   if (keyParts.includes(exactMatch)) {
     return exactMatch;
   }

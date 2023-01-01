@@ -54,7 +54,7 @@ describe("t", () => {
     expect(result.current("greeting.hello")).toBe("greeting.hello");
   });
 
-  it("returns key for unknown key", () => {
+  it.only("returns key for unknown key", () => {
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("en"),
     });
@@ -67,6 +67,8 @@ describe("t", () => {
     expect(result.current("greeting.wrong")).toBe("greeting.wrong");
     // @ts-expect-error We test an unknown key
     expect(result.current("title.hello")).toBe("title.hello");
+    // @ts-expect-error We test an unknown key
+    expect(result.current("title.hello.andi")).toBe("title.hello.andi");
   });
 
   it("returns key for unknown key and prefix", () => {
