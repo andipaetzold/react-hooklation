@@ -1,3 +1,3 @@
-import { S } from "./types.js";
+import { KeyPartSeparator } from "./types.js";
 
-export const SEPARATOR: S = ".";
+export const SEPARATOR: KeyPartSeparator = ".";

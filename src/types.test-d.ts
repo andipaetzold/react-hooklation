@@ -1,4 +1,4 @@
-import { describe, it, expectTypeOf } from "vitest";
+import { describe, expectTypeOf, it } from "vitest";
 import { Key, KeyPrefix, PrefixedKey } from "./types.js";
 
 describe("Keys", () => {
@@ -18,6 +18,27 @@ describe("Keys", () => {
     };
 
     expectTypeOf<Key<typeof obj>>().toMatchTypeOf<"a" | "b.c" | "b.d.e">();
+  });
+
+  it("plural keys", () => {
+    const obj = {
+      a: {
+        "=1": "1",
+        ">=2": "2",
+      },
+      b: {
+        "=1": "1",
+        ">=2": "2",
+      },
+      c: {
+        d: {
+          "=1": "1",
+          ">=2": "2",
+        },
+      },
+    };
+
+    expectTypeOf<Key<typeof obj>>().toMatchTypeOf<"a" | "b" | "c.d">();
   });
 });
 
@@ -39,6 +60,29 @@ describe("KeyPrefix", () => {
     };
 
     expectTypeOf<KeyPrefix<typeof obj>>().toMatchTypeOf<"b" | "b.d" | "b.f">();
+  });
+
+  it("plural keys", () => {
+    const obj = {
+      a: {
+        "=1": "1",
+        ">=2": "2",
+      },
+      b: {
+        c: {
+          "=1": "1",
+          ">=2": "2",
+        },
+        d: {
+          e: {
+            "=1": "1",
+            ">=2": "2",
+          },
+        },
+      },
+    };
+
+    expectTypeOf<KeyPrefix<typeof obj>>().toMatchTypeOf<"b" | "b.d">();
   });
 });
 

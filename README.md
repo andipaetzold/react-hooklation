@@ -38,7 +38,7 @@ pnpm add react-hooklation
 Within your components you can access translations using `useHooklation`:
 
 ```javascript
-const de = {
+const en = {
   title: "Welcome",
   greeting: { hello: "Hello" },
 };
@@ -48,7 +48,7 @@ const de = {
 };
 
 function Component() {
-  const t = useHooklation();
+  const t = useHooklation({ en, de });
 
   return (
     <>
@@ -58,6 +58,42 @@ function Component() {
   );
 }
 ```
+
+### Plural
+
+```javascript
+const en = {
+  potato: {
+    "=1": "1 Potato",
+    ">=2": "2+ Potatoes",
+    ">=5": "Many Potatoes",
+  },
+};
+const de = {
+  potato: {
+    "=1": "1 Kartoffel",
+    ">=2": "2+ Kartoffeln",
+    ">=5": "Viele Kartoffeln",
+  },
+};
+
+function Component() {
+  const t = useHooklation({ en, de });
+
+  return (
+    <ul>
+      <li>{t("potato", { count: 1 })}</li> <!-- 1 potato -->
+      <li>{t("potato", { count: 3 })}</li> <!-- 2+ potatoes -->
+      <li>{t("potato", { count: 5 })}</li> <!-- Many potatoes -->
+    </ul>
+  );
+}
+```
+
+Which translation is selected?
+
+1. exact match (`=2` or `=50`)
+2. ranged match (`>=2` or `>=50`) that starts closest to `count`
 
 ### Component-specific hooks
 

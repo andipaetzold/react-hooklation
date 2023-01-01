@@ -10,11 +10,21 @@ const translations = {
     greeting: {
       hello: "Hello",
     },
+    potato: {
+      "=1": "1 Potato",
+      ">=2": "2+ Potatoes",
+      ">=5": "Many Potatoes",
+    },
   },
   de: {
     title: "Willkommen!", // title
     greeting: {
       hello: "Hallo", // greeting.hellp
+    },
+    potato: {
+      "=1": "1 Kartoffel",
+      ">=2": "2+ Kartoffeln",
+      ">=5": "Viele Kartoffeln",
     },
   },
 };
@@ -85,5 +95,18 @@ describe("t", () => {
     );
 
     expect(result.current("hello")).toBe("Hello");
+  });
+
+  it("returns plural form", () => {
+    const { result } = renderHook(() => useHooklation(translations), {
+      wrapper: createWrapper("de"),
+    });
+
+    expect(result.current("potato", { count: 1 })).toBe("1 Kartoffel");
+    expect(result.current("potato", { count: 2 })).toBe("2+ Kartoffeln");
+    expect(result.current("potato", { count: 3 })).toBe("2+ Kartoffeln");
+    expect(result.current("potato", { count: 4 })).toBe("2+ Kartoffeln");
+    expect(result.current("potato", { count: 5 })).toBe("Viele Kartoffeln");
+    expect(result.current("potato", { count: 6 })).toBe("Viele Kartoffeln");
   });
 });
