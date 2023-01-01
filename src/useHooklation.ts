@@ -16,14 +16,7 @@ export interface UseHooklationOptions<
   prefix?: TPrefix;
 }
 
-export interface UseHooklationReturn<
-  TTranslation extends HooklationTranslation,
-  TPrefix extends KeyPrefix<TTranslation>
-> {
-  t: TFunction<TTranslation, TPrefix>;
-}
-
-export type TFunction<
+export type UseHooklationReturn<
   TTranslation extends HooklationTranslation,
   TPrefix extends KeyPrefix<TTranslation>
 > = (key: PrefixedKey<TTranslation, TPrefix>) => string;
@@ -38,7 +31,7 @@ export function useHooklation<
   const { locale } = useHooklationContext();
   const translation = translations[locale];
 
-  const t: TFunction<TTranslation, TPrefix> = useCallback(
+  return useCallback(
     (key) => {
       const fullKey = prefix ? `${prefix}${SEPARATOR}${key}` : key;
       if (!translation) {
@@ -66,6 +59,4 @@ export function useHooklation<
     },
     [translation, prefix]
   );
-
-  return { t };
 }

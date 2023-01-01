@@ -48,7 +48,7 @@ const de = {
 };
 
 function Component() {
-  const { t } = useHooklation();
+  const t = useHooklation();
 
   return (
     <>
@@ -86,7 +86,7 @@ const useLocalTranslation = createHooklationHook({ en, de });
 // component/index.ts
 import { useLocalTranslation } from "./locale";
 
-const { t } = useLocalTranslation();
+const t = useLocalTranslation();
 ```
 
 ## Development

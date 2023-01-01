@@ -31,5 +31,5 @@ it("creates a custom hook", () => {
     wrapper: createWrapper("en"),
   });
 
-  expect(result.current.t("title")).toBe("Welcome!");
+  expect(result.current("title")).toBe("Welcome!");
 });

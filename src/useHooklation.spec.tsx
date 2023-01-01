@@ -40,8 +40,8 @@ describe("t", () => {
       wrapper: createWrapper("fr"),
     });
 
-    expect(result.current.t("title")).toBe("title");
-    expect(result.current.t("greeting.hello")).toBe("greeting.hello");
+    expect(result.current("title")).toBe("title");
+    expect(result.current("greeting.hello")).toBe("greeting.hello");
   });
 
   it("returns key for unknown key", () => {
@@ -50,13 +50,13 @@ describe("t", () => {
     });
 
     // @ts-expect-error We test an unknown key
-    expect(result.current.t("wrong")).toBe("wrong");
+    expect(result.current("wrong")).toBe("wrong");
     // @ts-expect-error We test an unknown key
-    expect(result.current.t("greeting")).toBe("greeting");
+    expect(result.current("greeting")).toBe("greeting");
     // @ts-expect-error We test an unknown key
-    expect(result.current.t("greeting.wrong")).toBe("greeting.wrong");
+    expect(result.current("greeting.wrong")).toBe("greeting.wrong");
     // @ts-expect-error We test an unknown key
-    expect(result.current.t("title.hello")).toBe("title.hello");
+    expect(result.current("title.hello")).toBe("title.hello");
   });
 
   it("returns key for unknown key and prefix", () => {
@@ -66,7 +66,7 @@ describe("t", () => {
     );
 
     // @ts-expect-error We test an unknown key
-    expect(result.current.t("wrong")).toBe("greeting.wrong");
+    expect(result.current("wrong")).toBe("greeting.wrong");
   });
 
   it("returns translation", () => {
@@ -74,8 +74,8 @@ describe("t", () => {
       wrapper: createWrapper("en"),
     });
 
-    expect(result.current.t("title")).toBe("Welcome!");
-    expect(result.current.t("greeting.hello")).toBe("Hello");
+    expect(result.current("title")).toBe("Welcome!");
+    expect(result.current("greeting.hello")).toBe("Hello");
   });
 
   it("returns translation with prefix", () => {
@@ -84,6 +84,6 @@ describe("t", () => {
       { wrapper: createWrapper("en") }
     );
 
-    expect(result.current.t("hello")).toBe("Hello");
+    expect(result.current("hello")).toBe("Hello");
   });
 });
