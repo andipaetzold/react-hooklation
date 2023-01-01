@@ -99,8 +99,9 @@ function getPluralTranslationKeyPart(
   count: number
 ): string | undefined {
   // exact match
-  if (keyParts.includes(`=${count}`)) {
-    return `=${count}`;
+  const exactMatch = `=${count}`;
+  if (keyParts.includes(exactMatch)) {
+    return exactMatch;
   }
 
   // range match
