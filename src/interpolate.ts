@@ -1,43 +1,26 @@
-import { SEPARATOR } from "./constants.js";
+import { get } from "./get.js";
 
-const PREFIX = "\\{\\{\\s*";
-const SUFFIX = "\\s*\\}\\}";
+// TODO: use SEPARATOR
+const INTERPOLATION = /\{\{\s*(\w+(\.\w+)*)\s*\}\}/g;
 
 export function interpolate(
   text: string,
   vars: Record<string, unknown>
 ): string {
-  let result = text;
-  const replacements = dotify(vars);
-  for (const [key, value] of Object.entries(replacements)) {
-    result = result.replace(
-      new RegExp(`${PREFIX}${key}${SUFFIX}`, "g"),
-      String(value)
-    );
+  let result = "";
+
+  let start = 0;
+  let regExpResult: RegExpExecArray | null;
+  while ((regExpResult = INTERPOLATION.exec(text))) {
+    result += text.slice(start, regExpResult.index);
+    result += resolve(regExpResult[1], vars);
+    start = INTERPOLATION.lastIndex;
   }
+  result += text.slice(start);
 
   return result;
 }
 
-function dotify(o: unknown): { [key: string]: unknown } {
-  const res: { [key: string]: unknown } = {};
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function recurse(obj: any, current?: string) {
-    for (const key in obj) {
-      const value = obj[key];
-      const newKey = current ? `${current}${SEPARATOR}${key}` : key;
-
-      if (value && value instanceof Date) {
-        res[newKey] = value;
-      } else if (value && typeof value === "object") {
-        recurse(value, newKey);
-      } else {
-        res[newKey] = value;
-      }
-    }
-  }
-
-  recurse(o);
-  return res;
+function resolve(path: string, vars: Record<string, unknown>): string {
+  return get(vars, path) ?? "";
 }
