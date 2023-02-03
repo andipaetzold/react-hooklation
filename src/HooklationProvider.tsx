@@ -13,7 +13,7 @@ export function HooklationProvider({
   locale,
 }: PropsWithChildren<HooklationProviderProps>) {
   const emitEvent: HooklationEventEmitter = useCallback(
-    (event, detail) => plugins.forEach((p) => p.events?.[event](detail)),
+    (event, detail) => plugins.forEach((p) => p.events?.[event]?.(detail)),
     [plugins]
   );
 

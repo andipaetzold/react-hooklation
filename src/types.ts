@@ -18,7 +18,7 @@ export interface HooklationTranslations<
 
 export interface HooklationPlugin {
   events?: {
-    [T in keyof HooklationEventDetails]: (
+    [T in keyof HooklationEventDetails]?: (
       detail: HooklationEventDetails[T]
     ) => void;
   };
