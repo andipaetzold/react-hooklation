@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { HooklationProvider } from "./provider.js";
+import { HooklationProvider } from "./HooklationProvider.js";
 import { useHooklation } from "./useHooklation.js";
 
 const translations = {

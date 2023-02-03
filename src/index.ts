@@ -1,5 +1,5 @@
 export * from "./createHooklationHook.js";
-export * from "./provider.js";
+export * from "./HooklationProvider.js";
 export {
   HooklationTranslation,
   HooklationTranslationValue,

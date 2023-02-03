@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { expect, it } from "vitest";
 import { createHooklationHook } from "./createHooklationHook.js";
-import { HooklationProvider } from "./provider.js";
+import { HooklationProvider } from "./HooklationProvider.js";
 
 const translations = {
   en: {
