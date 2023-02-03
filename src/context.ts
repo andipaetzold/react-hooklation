@@ -1,9 +1,9 @@
 import { createContext } from "react";
+import { HooklationEventEmitter } from "./types.js";
 
 export interface ContextValue {
   locale: string;
-  onKeyNotFound?: (key: string) => void;
-  onLocaleNotFound?: (locale: string) => void;
+  emitEvent: HooklationEventEmitter;
 }
 
 export const context = createContext<ContextValue | undefined>(undefined);

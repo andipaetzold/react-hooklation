@@ -1,11 +1,25 @@
-import { PropsWithChildren } from "react";
-import { context, ContextValue } from "./context.js";
+import { PropsWithChildren, useCallback } from "react";
+import { context } from "./context.js";
+import { HooklationEventEmitter, HooklationPlugin } from "./types.js";
 
-export type HooklationProviderProps = ContextValue;
+export interface HooklationProviderProps {
+  locale: string;
+  plugins?: HooklationPlugin[];
+}
 
 export function HooklationProvider({
   children,
-  ...props
+  plugins = [],
+  locale,
 }: PropsWithChildren<HooklationProviderProps>) {
-  return <context.Provider value={props}>{children}</context.Provider>;
+  const emitEvent: HooklationEventEmitter = useCallback(
+    (event, detail) => plugins.forEach((p) => p.events?.[event](detail)),
+    [plugins]
+  );
+
+  return (
+    <context.Provider value={{ locale, emitEvent }}>
+      {children}
+    </context.Provider>
+  );
 }

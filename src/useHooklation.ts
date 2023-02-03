@@ -35,25 +35,25 @@ export function useHooklation<
   translations: HooklationTranslations<TTranslation>,
   { prefix }: UseHooklationOptions<TTranslation, TPrefix> = {}
 ): UseHooklationReturn<TTranslation, TPrefix> {
-  const { locale, onKeyNotFound, onLocaleNotFound } = useHooklationContext();
+  const { locale, emitEvent } = useHooklationContext();
   const translation = translations[locale];
 
   return useCallback(
     (key, context: Context = {}) => {
       const fullKey = prefix ? `${prefix}${SEPARATOR}${key}` : key;
       if (!translation) {
-        onLocaleNotFound?.(locale);
+        emitEvent("missingLocale", { locale });
         return fullKey;
       }
 
       const result = getTranslation(translation, fullKey, context);
       if (result === undefined) {
-        onKeyNotFound?.(fullKey);
+        emitEvent("missingKey", { locale, key: fullKey });
         return fullKey;
       }
       return interpolate(result, context);
     },
-    [prefix, translation, onKeyNotFound, onLocaleNotFound, locale]
+    [prefix, translation, emitEvent, locale]
   );
 }
 
