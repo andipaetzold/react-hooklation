@@ -9,9 +9,9 @@ import { IsNever, ToString } from "./util.js";
 
 // Exported types
 export type HooklationTranslationValue = HooklationTranslation | string;
-export interface HooklationTranslation {
+export type HooklationTranslation = {
   [key: string]: HooklationTranslationValue;
-}
+};
 
 export type HooklationTranslations<TTranslation extends HooklationTranslation> =
   {
