@@ -1,20 +1,17 @@
-import {
-  HooklationTranslation,
-  HooklationTranslationValue,
-} from "./HooklationTranslation.js";
 import { IsPluralValue } from "./plural.js";
+import { StringMap, StringMapValue } from "./util.js";
 
-export type Normalize<TTranslation extends HooklationTranslation> = {
-  [key in keyof TTranslation]: NormalizeInner<TTranslation[key]>;
+export type Normalize<TStringMap extends StringMap> = {
+  [key in keyof TStringMap]: NormalizeInner<TStringMap[key]>;
 };
 
-type NormalizeInner<TTranslation extends HooklationTranslationValue> =
-  IsPluralValue<TTranslation> extends true
+type NormalizeInner<TStringMapValue extends StringMapValue> =
+  IsPluralValue<TStringMapValue> extends true
     ? string
     : {
-        [key in keyof TTranslation]: TTranslation[key] extends string
+        [key in keyof TStringMapValue]: TStringMapValue[key] extends string
           ? string
-          : TTranslation[key] extends HooklationTranslationValue
-          ? NormalizeInner<TTranslation[key]>
+          : TStringMapValue[key] extends StringMapValue
+          ? NormalizeInner<TStringMapValue[key]>
           : never;
       };
