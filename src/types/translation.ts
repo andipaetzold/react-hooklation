@@ -1,25 +1,22 @@
+import { Config } from "./Config.js";
+import { KeyPartSeparator } from "./constants.js";
+import {
+  HooklationTranslation,
+  HooklationTranslationValue,
+} from "./HooklationTranslation.js";
+import { IsPluralValue, PluralValueKeyPart } from "./plural.js";
+import { IsNever, ToString } from "./util.js";
+
 /**
  * Naming
  * Key: 'x.y.z'
  * KeyPart: 'x', 'y', 'z' of 'x.y.z'
  */
 
-import { Config } from "./config.js";
-import { IsNever, ToString } from "./util.js";
-
-// Exported types
-export type HooklationTranslationValue = HooklationTranslation | string;
-export type HooklationTranslation = {
-  [key: string]: HooklationTranslationValue;
-};
-
 export type HooklationTranslations<TTranslation extends HooklationTranslation> =
   {
     [locale in Config["locale"]]: TTranslation;
   };
-
-// Constants
-export type KeyPartSeparator = ".";
 
 // Key
 export type Key<TTranslation extends HooklationTranslation> = {
@@ -66,22 +63,3 @@ export type PrefixedKey<
 
 export type IsLastKeyPart<TKeyPartValue extends HooklationTranslationValue> =
   TKeyPartValue extends string ? true : IsPluralValue<TKeyPartValue>;
-
-export type PluralValueKeyPart = `${"=" | ">="}${number}`;
-
-/**
- * IsPluralValue
- *
- * `true` if
- * - every key of TValue matches `PluralValueKeyPart`, and
- * - all values are string
- */
-export type IsPluralValue<TValue extends HooklationTranslationValue> = {
-  [K in keyof TValue]: TValue[K] extends string
-    ? K extends PluralValueKeyPart
-      ? true
-      : false
-    : false;
-}[keyof TValue] extends true
-  ? true
-  : false;

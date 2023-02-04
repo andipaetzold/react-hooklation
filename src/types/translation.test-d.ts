@@ -1,7 +1,7 @@
 import { describe, expectTypeOf, it } from "vitest";
 import { Key, KeyPrefix, PrefixedKey } from "./translation.js";
 
-describe("Keys", () => {
+describe("Key", () => {
   it("single level", () => {
     const obj = { a: "1", b: "2" };
 
