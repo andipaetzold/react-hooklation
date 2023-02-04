@@ -13,11 +13,10 @@ export interface HooklationTranslation {
   [key: string]: HooklationTranslationValue;
 }
 
-export interface HooklationTranslations<
-  TTranslation extends HooklationTranslation
-> {
-  [locale: Config["locale"]]: TTranslation;
-}
+export type HooklationTranslations<TTranslation extends HooklationTranslation> =
+  {
+    [locale in Config["locale"]]: TTranslation;
+  };
 
 // Constants
 export type KeyPartSeparator = ".";
