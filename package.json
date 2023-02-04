@@ -1,6 +1,6 @@
 {
   "name": "react-hooklation",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Lightweight, dependency-free and well-typed React internationalization library",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
