@@ -4,6 +4,9 @@
  * KeyPart: 'x', 'y', 'z' of 'x.y.z'
  */
 
+import { Config } from "./config.js";
+import { IsNever, ToString } from "./util.js";
+
 // Exported types
 export type HooklationTranslationValue = HooklationTranslation | string;
 export interface HooklationTranslation {
@@ -13,28 +16,7 @@ export interface HooklationTranslation {
 export interface HooklationTranslations<
   TTranslation extends HooklationTranslation
 > {
-  [locale: string]: TTranslation;
-}
-
-export interface HooklationPlugin {
-  events?: {
-    [T in keyof HooklationEventDetails]?: (
-      detail: HooklationEventDetails[T]
-    ) => void;
-  };
-}
-
-// Events
-export interface HooklationEventDetails {
-  missingKey: { locale: string; key: string };
-  missingLocale: { locale: string };
-}
-
-export interface HooklationEventEmitter {
-  <T extends keyof HooklationEventDetails>(
-    event: T,
-    detail: HooklationEventDetails[T]
-  ): void;
+  [locale: Config["locale"]]: TTranslation;
 }
 
 // Constants
@@ -104,7 +86,3 @@ export type IsPluralValue<TValue extends HooklationTranslationValue> = {
 }[keyof TValue] extends true
   ? true
   : false;
-
-// Utility types
-export type IsNever<T> = [T] extends [never] ? true : false;
-export type ToString<T> = T & string;

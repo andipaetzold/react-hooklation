@@ -1,4 +1,4 @@
-import { PluralValueKeyPart } from "./types.js";
+import { PluralValueKeyPart } from "./types/index.js";
 
 export function getPluralKeyPart(
   keyParts: string[],

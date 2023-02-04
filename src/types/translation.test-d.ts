@@ -1,5 +1,5 @@
 import { describe, expectTypeOf, it } from "vitest";
-import { Key, KeyPrefix, PrefixedKey } from "./types.js";
+import { Key, KeyPrefix, PrefixedKey } from "./translation.js";
 
 describe("Keys", () => {
   it("single level", () => {

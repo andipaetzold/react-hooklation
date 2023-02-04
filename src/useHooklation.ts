@@ -7,7 +7,7 @@ import {
   HooklationTranslations,
   KeyPrefix,
   PrefixedKey,
-} from "./types.js";
+} from "./types/index.js";
 import { useHooklationContext } from "./useHooklationContext.js";
 import { interpolate } from "./interpolate.js";
 

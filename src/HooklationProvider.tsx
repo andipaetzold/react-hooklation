@@ -1,9 +1,13 @@
 import { PropsWithChildren, useCallback } from "react";
 import { context } from "./context.js";
-import { HooklationEventEmitter, HooklationPlugin } from "./types.js";
+import {
+  Config,
+  HooklationEventEmitter,
+  HooklationPlugin,
+} from "./types/index.js";
 
 export interface HooklationProviderProps {
-  locale: string;
+  locale: Config["locale"];
   plugins?: HooklationPlugin[];
 }
 

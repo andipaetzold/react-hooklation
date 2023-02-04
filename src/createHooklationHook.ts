@@ -2,7 +2,7 @@ import {
   HooklationTranslation,
   HooklationTranslations,
   KeyPrefix,
-} from "./types.js";
+} from "./types/index.js";
 import { useHooklation, UseHooklationOptions } from "./useHooklation.js";
 
 export function createHooklationHook<
