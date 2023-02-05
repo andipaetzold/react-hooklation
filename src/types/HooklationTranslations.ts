@@ -1,6 +1,6 @@
 import type { Config } from "./Config.js";
 import type { StringMap } from "./util.js";
 
-export type HooklationTranslations<TStringMap extends StringMap> = {
-  [locale in Config["locale"]]: TStringMap;
-};
+export interface HooklationTranslations<TStringMap extends StringMap> {
+  [locale: Config["locale"]]: TStringMap;
+}
