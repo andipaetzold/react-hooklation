@@ -3,7 +3,6 @@ export * from "./HooklationProvider.js";
 export {
   HooklationConfig,
   HooklationTranslation,
-  HooklationTranslationValue,
   HooklationTranslations,
   HooklationPlugin,
 } from "./types/index.js";

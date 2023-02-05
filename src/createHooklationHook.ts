@@ -1,14 +1,10 @@
-import {
-  HooklationTranslation,
-  HooklationTranslations,
-  KeyPrefix,
-} from "./types/index.js";
+import { HooklationTranslations, KeyPrefix, StringMap } from "./types/index.js";
 import { useHooklation, UseHooklationOptions } from "./useHooklation.js";
 
-export function createHooklationHook<
-  TTranslation extends HooklationTranslation
->(translations: HooklationTranslations<TTranslation>) {
-  return <TPrefix extends KeyPrefix<TTranslation> = never>(
-    options?: UseHooklationOptions<TTranslation, TPrefix>
+export function createHooklationHook<TStringMap extends StringMap>(
+  translations: HooklationTranslations<TStringMap>
+) {
+  return <TPrefix extends KeyPrefix<TStringMap> = never>(
+    options?: UseHooklationOptions<TStringMap, TPrefix>
   ) => useHooklation(translations, options);
 }

@@ -1,4 +1,4 @@
-import { HooklationTranslationValue } from "./HooklationTranslation.js";
+import type { StringMapValue } from "./util.js";
 
 /**
  * Examples:
@@ -14,7 +14,7 @@ export type PluralValueKeyPart = `${"=" | ">="}${number}`;
  * - every key of TValue matches `PluralValueKeyPart`, and
  * - all values are string
  */
-export type IsPluralValue<TValue extends HooklationTranslationValue> = {
+export type IsPluralValue<TValue extends StringMapValue> = {
   [K in keyof TValue]: TValue[K] extends string
     ? K extends PluralValueKeyPart
       ? true

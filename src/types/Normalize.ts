@@ -1,5 +1,5 @@
-import { IsPluralValue } from "./plural.js";
-import { StringMap, StringMapValue } from "./util.js";
+import type { IsPluralValue } from "./plural.js";
+import type { StringMap, StringMapValue } from "./util.js";
 
 export type Normalize<TStringMap extends StringMap> = {
   [key in keyof TStringMap]: NormalizeInner<TStringMap[key]>;

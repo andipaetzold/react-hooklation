@@ -1,4 +1,4 @@
-import { Merge } from "./util.js";
+import type { Merge } from "./util.js";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface HooklationConfig {}

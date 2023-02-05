@@ -20,8 +20,11 @@ export interface UseHooklationOptions<
 
 export type UseHooklationReturn<
   TTranslation extends HooklationTranslation,
-  TPrefix extends KeyPrefix<TTranslation>
-> = (key: PrefixedKey<TTranslation, TPrefix>, context?: Context) => string;
+  TTranslationKeyPrefix extends KeyPrefix<TTranslation>
+> = (
+  key: PrefixedKey<TTranslation, TTranslationKeyPrefix>,
+  context?: Context
+) => string;
 
 interface Context {
   readonly count?: number | [number];

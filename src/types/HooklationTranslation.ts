@@ -1,4 +1,3 @@
-export type HooklationTranslationValue = HooklationTranslation | string;
-export type HooklationTranslation = {
-  [key: string]: HooklationTranslationValue;
-};
+import type { StringMap } from "./util.js";
+
+export type HooklationTranslation = StringMap;
