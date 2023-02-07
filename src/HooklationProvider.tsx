@@ -4,6 +4,7 @@ import {
   Config,
   HooklationEventEmitter,
   HooklationPlugin,
+  HooklationTransformValue,
 } from "./types/index.js";
 
 export interface HooklationProviderProps {
@@ -21,8 +22,24 @@ export function HooklationProvider({
     [plugins]
   );
 
+  const transformValue: HooklationTransformValue<
+    string,
+    Config["returnValue"]
+  > = useCallback(
+    (params) =>
+      plugins.reduce(
+        (value, plugin) =>
+          plugin.transformValue?.({
+            ...params,
+            value,
+          }) ?? value,
+        params.value as unknown
+      ) as Config["returnValue"],
+    [plugins]
+  );
+
   return (
-    <context.Provider value={{ locale, emitEvent }}>
+    <context.Provider value={{ locale, emitEvent, transformValue }}>
       {children}
     </context.Provider>
   );

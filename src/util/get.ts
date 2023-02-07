@@ -1,4 +1,4 @@
-import { SEPARATOR } from "./constants.js";
+import { SEPARATOR } from "../constants.js";
 
 export function get<T = unknown>(obj: unknown, key: string): T | undefined {
   const keyParts = key.split(SEPARATOR);

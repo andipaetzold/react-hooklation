@@ -8,3 +8,4 @@ export {
 } from "./types/index.js";
 export * from "./useHooklation.js";
 export * from "./useHooklationContext.js";
+export * from "./plugins/index.js";

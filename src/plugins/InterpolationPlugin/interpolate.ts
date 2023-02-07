@@ -1,4 +1,4 @@
-import { get } from "./get.js";
+import { get } from "../../util/get.js";
 
 // TODO: use SEPARATOR
 const INTERPOLATION = /\{\{\s*(\w+(\.\w+)*)\s*\}\}/g;

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { SEPARATOR } from "./constants.js";
-import { get } from "./get.js";
+import { get } from "./util/get.js";
 import { getPluralKeyPart } from "./getPluralKeyPart.js";
 import {
   Config,
@@ -10,7 +10,6 @@ import {
   PrefixedKey,
 } from "./types/index.js";
 import { useHooklationContext } from "./useHooklationContext.js";
-import { interpolate } from "./interpolate.js";
 
 export interface UseHooklationOptions<
   TTranslation extends HooklationTranslation,
@@ -39,25 +38,31 @@ export function useHooklation<
   translations: HooklationTranslations<TTranslation>,
   { prefix }: UseHooklationOptions<TTranslation, TPrefix> = {}
 ): UseHooklationReturn<TTranslation, TPrefix> {
-  const { locale, emitEvent } = useHooklationContext();
+  const { locale, emitEvent, transformValue } = useHooklationContext();
   const translation = translations[locale];
 
   return useCallback(
-    (key, context: Context = {}) => {
-      const fullKey = prefix ? `${prefix}${SEPARATOR}${key}` : key;
+    (keySuffix, context = {}) => {
+      const key = prefix ? `${prefix}${SEPARATOR}${keySuffix}` : keySuffix;
       if (!translation) {
         emitEvent("missingLocale", { locale });
-        return fullKey;
+        return key;
       }
 
-      const result = getTranslation(translation, fullKey, context);
-      if (result === undefined) {
-        emitEvent("missingKey", { locale, key: fullKey });
-        return fullKey;
+      const value = getTranslation(translation, key, context);
+      if (value === undefined) {
+        emitEvent("missingKey", { locale, key });
+        return key;
       }
-      return interpolate(result, context);
+
+      return transformValue({
+        locale,
+        key,
+        value,
+        context,
+      });
     },
-    [prefix, translation, emitEvent, locale]
+    [prefix, translation, transformValue, locale, emitEvent]
   );
 }
 

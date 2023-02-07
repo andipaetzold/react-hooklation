@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { interpolate } from "./interpolate";
+import { interpolate } from "./interpolate.js";
 
 describe("interpolate", () => {
   it("single level", () => {

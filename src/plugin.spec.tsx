@@ -47,3 +47,26 @@ it("events.missingLocale", () => {
 
   expect(missingLocaleHandler).toHaveBeenCalledWith({ locale: "de" });
 });
+
+it("transformValue", () => {
+  const translations = { en: { hello: "Hello" } };
+
+  const transformValue = vi
+    .fn()
+    .mockImplementation(({ value }: { value: string }) => `${value} Andi`);
+  const plugin: HooklationPlugin = { transformValue };
+
+  const { result } = renderHook(() => useHooklation(translations), {
+    wrapper: createWrapper("en", plugin),
+  });
+
+  const value = result.current("hello", { key: "context" });
+
+  expect(value).toBe("Hello Andi");
+  expect(transformValue).toBeCalledWith({
+    key: "hello",
+    locale: "en",
+    value: "Hello",
+    context: { key: "context" },
+  });
+});

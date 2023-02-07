@@ -1,9 +1,12 @@
+import { Config } from "./Config.js";
+
 export interface HooklationPlugin {
   events?: {
     [T in keyof HooklationEventDetails]?: (
       detail: HooklationEventDetails[T]
     ) => void;
   };
+  transformValue?: HooklationTransformValue;
 }
 
 export interface HooklationEventDetails {
@@ -17,3 +20,10 @@ export interface HooklationEventEmitter {
     detail: HooklationEventDetails[T]
   ): void;
 }
+
+export type HooklationTransformValue<T = unknown, U = unknown> = (params: {
+  locale: Config["locale"];
+  key: string;
+  value: T;
+  context: Record<string, unknown>;
+}) => U;
