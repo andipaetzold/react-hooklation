@@ -3,6 +3,7 @@ import { SEPARATOR } from "./constants.js";
 import { get } from "./get.js";
 import { getPluralKeyPart } from "./getPluralKeyPart.js";
 import {
+  Config,
   HooklationTranslation,
   HooklationTranslations,
   KeyPrefix,
@@ -24,7 +25,7 @@ export type UseHooklationReturn<
 > = (
   key: PrefixedKey<TTranslation, TTranslationKeyPrefix>,
   context?: Context
-) => string;
+) => Config["returnValue"];
 
 interface Context {
   readonly count?: number | [number];

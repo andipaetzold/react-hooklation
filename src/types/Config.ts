@@ -5,6 +5,7 @@ export interface HooklationConfig {}
 
 interface DefaultConfig {
   locale: string;
+  returnValue: string;
 }
 
 export type Config = Merge<DefaultConfig, HooklationConfig>;
