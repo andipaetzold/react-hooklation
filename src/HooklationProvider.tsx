@@ -9,7 +9,7 @@ import {
 
 export interface HooklationProviderProps {
   locale: Config["locale"];
-  plugins?: HooklationPlugin[];
+  plugins?: ReadonlyArray<HooklationPlugin>;
 }
 
 export function HooklationProvider({
