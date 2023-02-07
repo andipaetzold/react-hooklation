@@ -5,7 +5,7 @@ import {
   HooklationEventEmitter,
   HooklationPlugin,
   HooklationTransformValue,
-} from "./types/index.js";
+} from "../types/index.js";
 
 export interface HooklationProviderProps {
   locale: Config["locale"];

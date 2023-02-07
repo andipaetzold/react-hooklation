@@ -1,4 +1,8 @@
-import { HooklationTranslations, KeyPrefix, StringMap } from "./types/index.js";
+import {
+  HooklationTranslations,
+  KeyPrefix,
+  StringMap,
+} from "../types/index.js";
 import { useHooklation, UseHooklationOptions } from "./useHooklation.js";
 
 export function createHooklationHook<TStringMap extends StringMap>(

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { SEPARATOR } from "./constants.js";
-import { get } from "./util/get.js";
+import { SEPARATOR } from "../constants.js";
+import { get } from "../util/get.js";
 import { getPluralKeyPart } from "./getPluralKeyPart.js";
 import {
   Config,
@@ -8,7 +8,7 @@ import {
   HooklationTranslations,
   KeyPrefix,
   PrefixedKey,
-} from "./types/index.js";
+} from "../types/index.js";
 import { useHooklationContext } from "./useHooklationContext.js";
 
 export interface UseHooklationOptions<

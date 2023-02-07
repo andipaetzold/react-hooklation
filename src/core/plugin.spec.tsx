@@ -1,9 +1,9 @@
 import { renderHook } from "@testing-library/react";
 import { PropsWithChildren } from "react";
 import { it, expect, vi } from "vitest";
-import { HooklationProvider } from "./HooklationProvider";
-import { HooklationPlugin } from "./types";
-import { useHooklation } from "./useHooklation";
+import { HooklationProvider } from "./HooklationProvider.js";
+import { HooklationPlugin } from "../types/index.js";
+import { useHooklation } from "./useHooklation.js";
 
 function createWrapper(locale: string, plugin?: HooklationPlugin) {
   return function Provider({ children }: PropsWithChildren) {

@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { Config, HooklationEventEmitter } from "./types/index.js";
+import { Config, HooklationEventEmitter } from "../types/index.js";
 
 export interface ContextValue {
   locale: string;
