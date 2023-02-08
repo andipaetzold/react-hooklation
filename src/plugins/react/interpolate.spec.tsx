@@ -164,7 +164,7 @@ describe("interpolate", () => {
       `);
     });
 
-    it.only("without component", () => {
+    it("without component", () => {
       const element = interpolate(
         "Hello <Name>Andi</Name>",
         {}
