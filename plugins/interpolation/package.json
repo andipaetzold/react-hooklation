@@ -1,7 +1,0 @@
-{
-    "main": "../../lib/plugins/interpolation/index.js",
-    "types": "../../lib/plugins/interpolation/index.d.ts",
-    "sideEffects": false,
-    "type": "module"
-  }
-  

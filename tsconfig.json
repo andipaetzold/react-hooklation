@@ -7,9 +7,5 @@
     "outDir": "lib",
     "jsx": "react-jsx"
   },
-  "files": [
-    "src/index.ts",
-    "src/plugins/interpolation/index.ts",
-    "src/plugins/react/index.ts"
-  ]
+  "files": ["src/index.ts"]
 }

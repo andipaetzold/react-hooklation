@@ -1,7 +1,0 @@
-{
-    "main": "../../lib/plugins/react/index.js",
-    "types": "../../lib/plugins/react/index.d.ts",
-    "sideEffects": false,
-    "type": "module"
-  }
-  

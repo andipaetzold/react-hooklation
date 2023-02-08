@@ -7,13 +7,10 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": "./lib/index.js",
-    "./plugins/interpolation": "./lib/plugins/interpolation/index.js",
-    "./plugins/react": "./lib/plugins/react/index.js"
+    ".": "./lib/index.js"
   },
   "files": [
-    "lib",
-    "plugins"
+    "lib"
   ],
   "repository": {
     "type": "git",

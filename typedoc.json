@@ -1,8 +1,4 @@
 {
-  "entryPoints": [
-    "src/index.ts",
-    "src/plugins/interpolation/index.ts",
-    "src/plugins/react/index.ts"
-  ],
+  "entryPoints": ["src/index.ts"],
   "out": "docs"
 }
