@@ -8,7 +8,8 @@
   "type": "module",
   "exports": {
     ".": "./lib/index.js",
-    "./plugins/interpolation": "./lib/plugins/interpolation/index.js"
+    "./plugins/interpolation": "./lib/plugins/interpolation/index.js",
+    "./plugins/react": "./lib/plugins/react/index.js"
   },
   "files": [
     "lib",
