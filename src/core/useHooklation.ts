@@ -18,15 +18,7 @@ export interface UseHooklationOptions<
   prefix?: TPrefix;
 }
 
-export type UseHooklationReturn<
-  TTranslation extends HooklationTranslation,
-  TTranslationKeyPrefix extends KeyPrefix<TTranslation>
-> = (
-  key: PrefixedKey<TTranslation, TTranslationKeyPrefix>,
-  context?: Context
-) => Config["returnValue"];
-
-interface Context {
+export interface Context {
   readonly count?: number | [number];
   readonly [vars: string]: unknown;
 }
@@ -37,22 +29,25 @@ export function useHooklation<
 >(
   translations: HooklationTranslations<TTranslation>,
   { prefix }: UseHooklationOptions<TTranslation, TPrefix> = {}
-): UseHooklationReturn<TTranslation, TPrefix> {
+) {
   const { locale, emitEvent, transformValue } = useHooklationContext();
   const translation = translations[locale];
 
   return useCallback(
-    (keySuffix, context = {}) => {
+    <TReturnValue extends Config["returnValue"]>(
+      keySuffix: PrefixedKey<TTranslation, TPrefix>,
+      context: Context = {}
+    ): TReturnValue => {
       const key = prefix ? `${prefix}${SEPARATOR}${keySuffix}` : keySuffix;
       if (!translation) {
         emitEvent("missingLocale", { locale });
-        return key;
+        return key as TReturnValue;
       }
 
       const value = getTranslation(translation, key, context);
       if (value === undefined) {
         emitEvent("missingKey", { locale, key });
-        return key;
+        return key as TReturnValue;
       }
 
       return transformValue({
@@ -60,7 +55,7 @@ export function useHooklation<
         key,
         value,
         context,
-      });
+      }) as TReturnValue;
     },
     [prefix, translation, transformValue, locale, emitEvent]
   );
