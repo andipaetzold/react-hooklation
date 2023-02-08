@@ -2,6 +2,9 @@ import type { KeyPartSeparator } from "./constants.js";
 import type { PluralValueKeyPart } from "./plural.js";
 import type { StringMap, ToString } from "./util.js";
 
+/**
+ * Union type of all keys for `TStringMap`
+ */
 export type Key<TStringMap extends StringMap> = {
   [KeyPart in keyof TStringMap]: TStringMap[KeyPart] extends StringMap
     ? `${ToString<KeyPart>}${KeyInner<TStringMap[KeyPart]>}`

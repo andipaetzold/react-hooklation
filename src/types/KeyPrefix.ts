@@ -2,6 +2,9 @@ import type { KeyPartSeparator } from "./constants.js";
 import type { IsPluralValue } from "./plural.js";
 import type { StringMap, StringMapValue, ToString } from "./util.js";
 
+/**
+ * Union type of all key prefixes for `TStringMap`
+ */
 export type KeyPrefix<TStringMap extends StringMap> = {
   [KeyPart in keyof TStringMap]: IsLastKeyPart<
     TStringMap[KeyPart]
