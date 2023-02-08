@@ -1,11 +1,15 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2019",
     "module": "Node16",
     "declaration": true,
     "outDir": "lib",
     "jsx": "react-jsx"
   },
-  "files": ["src/index.ts", "src/plugins/interpolation/index.ts"]
+  "files": [
+    "src/index.ts",
+    "src/plugins/interpolation/index.ts",
+    "src/plugins/react/index.ts"
+  ]
 }
