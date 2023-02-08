@@ -24,8 +24,10 @@ function interpolateOpenAndClosing(
     parts.push(text.slice(start, regExpResult.index));
 
     const fallback = regExpResult[0];
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const children = regExpResult.groups!.children;
     const interpolatedChildren = interpolateOpenAndClosing(children, vars);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const element = createElement(regExpResult.groups!.tag, {
       ...vars,
       children: flatten(interpolatedChildren),
@@ -52,6 +54,7 @@ function interpolateSelfClosing(
   while ((regExpResult = SELF_CLOSING.exec(text))) {
     result.push(text.slice(start, regExpResult.index));
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const element = createElement(regExpResult.groups!.tag, vars);
     const fallback = regExpResult[0];
     result.push(element ?? fallback);
