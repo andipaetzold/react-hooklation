@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from "react";
+import { Fragment, isValidElement, ReactElement } from "react";
 import { get } from "../../util/get.js";
 import { isClassComponent, isFunctionComponent } from "./util.js";
 
@@ -71,6 +71,11 @@ function createElement(
   vars: Record<string, unknown>
 ): ReactElement | string | undefined {
   const Component = get(vars, path);
+
+  if (isValidElement(Component)) {
+    return Component;
+  }
+
   if (!isClassComponent(Component) && !isFunctionComponent(Component)) {
     return undefined;
   }

@@ -96,6 +96,21 @@ describe("interpolate", () => {
           </div>
         `);
     });
+
+    it("with node", () => {
+      const element = interpolate("Hello <Name />", {
+        Name: <b>Andi</b>,
+      }) as ReactElement;
+      const { container } = render(element);
+      expect(container).toMatchInlineSnapshot(`
+        <div>
+          Hello 
+          <b>
+            Andi
+          </b>
+        </div>
+      `);
+    });
   });
 
   describe("open-close", () => {
