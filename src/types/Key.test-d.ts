@@ -40,4 +40,18 @@ describe("Key", () => {
 
     expectTypeOf<Key<typeof obj>>().toMatchTypeOf<"a" | "b" | "c.d">();
   });
+
+  it("fallback", () => {
+    const obj = {
+      a: "1",
+      b: {
+        c: "2",
+        "*": { e: "3" },
+      },
+    };
+
+    expectTypeOf<Key<typeof obj>>().toMatchTypeOf<
+      "a" | "b.c" | `b.${string}.e`
+    >();
+  });
 });

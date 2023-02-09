@@ -7,14 +7,16 @@ import type { StringMap, ToString } from "./util.js";
  */
 export type Key<TStringMap extends StringMap> = {
   [KeyPart in keyof TStringMap]: TStringMap[KeyPart] extends StringMap
-    ? `${ToString<KeyPart>}${KeyInner<TStringMap[KeyPart]>}`
-    : ToString<KeyPart>;
+    ? `${FormatKey<KeyPart>}${KeyInner<TStringMap[KeyPart]>}`
+    : FormatKey<KeyPart>;
 }[keyof TStringMap];
 
 type KeyInner<TStringMap extends StringMap> = {
   [KeyPart in keyof TStringMap]: TStringMap[KeyPart] extends StringMap
-    ? `${KeyPartSeparator}${ToString<KeyPart>}${KeyInner<TStringMap[KeyPart]>}`
+    ? `${KeyPartSeparator}${FormatKey<KeyPart>}${KeyInner<TStringMap[KeyPart]>}` // middle
     : KeyPart extends PluralValueKeyPart
-    ? ``
-    : `${KeyPartSeparator}${ToString<KeyPart>}`;
+    ? ""
+    : `${KeyPartSeparator}${FormatKey<KeyPart>}`; // leaf
 }[keyof TStringMap];
+
+type FormatKey<TKeyPart> = TKeyPart extends "*" ? string : ToString<TKeyPart>;

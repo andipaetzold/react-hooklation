@@ -16,11 +16,15 @@ const translations = {
       ">=5": "Many Potatoes",
     },
     fullGreeting: "Hey {{ name }}",
+    fallback: {
+      key: "Key",
+      "*": "Fallback",
+    },
   },
   de: {
     title: "Willkommen!", // title
     greeting: {
-      hello: "Hallo", // greeting.hellp
+      hello: "Hallo", // greeting.hello
     },
     potato: {
       "=1": "1 Kartoffel",
@@ -28,6 +32,10 @@ const translations = {
       ">=5": "Viele Kartoffeln",
     },
     fullGreeting: "Hallo {{ name }}",
+    fallback: {
+      key: "Key",
+      "*": "Fallback",
+    },
   },
 };
 
@@ -112,5 +120,36 @@ describe("t", () => {
     expect(result.current("potato", { count: 4 })).toBe("2+ Kartoffeln");
     expect(result.current("potato", { count: 5 })).toBe("Viele Kartoffeln");
     expect(result.current("potato", { count: 6 })).toBe("Viele Kartoffeln");
+  });
+
+  it("return value with fallback", () => {
+    const translations = {
+      en: {
+        person: {
+          andi: "Andi",
+          "*": "Someone",
+        },
+        greeting: {
+          hello: {
+            andi: "Hello Andi",
+            "*": "Hello stranger",
+          },
+          "*": {
+            andi: "Hi Andi",
+            "*": "Hi stranger",
+          },
+        },
+      },
+    };
+    const { result } = renderHook(() => useHooklation(translations), {
+      wrapper: createWrapper("en"),
+    });
+
+    expect(result.current("person.andi")).toBe("Andi");
+    expect(result.current("person.viola")).toBe("Someone");
+    expect(result.current("greeting.hello.andi")).toBe("Hello Andi");
+    expect(result.current("greeting.hello.viola")).toBe("Hello stranger");
+    expect(result.current("greeting.moin.andi")).toBe("Hi Andi");
+    expect(result.current("greeting.moin.viola")).toBe("Hi stranger");
   });
 });

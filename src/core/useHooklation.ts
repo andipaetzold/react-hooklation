@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { SEPARATOR } from "../constants.js";
-import { get } from "../util/get.js";
 import { getPluralKeyPart } from "./getPluralKeyPart.js";
 import {
   Config,
@@ -66,7 +65,7 @@ function getTranslation(
   key: string,
   context: Context
 ): string | undefined {
-  let result = get<HooklationTranslation | string>(translation, key);
+  let result = resolveValue<HooklationTranslation | string>(translation, key);
   if (typeof result === "string") {
     return result;
   }
@@ -90,4 +89,27 @@ function getTranslation(
   }
 
   return result;
+}
+
+function resolveValue<T = unknown>(obj: unknown, key: string): T | undefined {
+  const keyParts = key.split(SEPARATOR);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let result: any = obj;
+  for (const keyPart of keyParts) {
+    // replace with Object.hasOwn in the future
+    if (result.hasOwnProperty(keyPart)) {
+      result = result[keyPart];
+      continue;
+    }
+
+    if (result.hasOwnProperty("*")) {
+      result = result["*"];
+      continue;
+    }
+
+    return;
+  }
+
+  return result as T;
 }
