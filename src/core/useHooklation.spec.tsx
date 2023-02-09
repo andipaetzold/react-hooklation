@@ -4,41 +4,6 @@ import { describe, expect, it, vi } from "vitest";
 import { HooklationProvider } from "./HooklationProvider.js";
 import { useHooklation } from "./useHooklation.js";
 
-const translations = {
-  en: {
-    title: "Welcome!",
-    greeting: {
-      hello: "Hello",
-    },
-    potato: {
-      "=1": "1 Potato",
-      ">=2": "2+ Potatoes",
-      ">=5": "Many Potatoes",
-    },
-    fullGreeting: "Hey {{ name }}",
-    fallback: {
-      key: "Key",
-      "*": "Fallback",
-    },
-  },
-  de: {
-    title: "Willkommen!", // title
-    greeting: {
-      hello: "Hallo", // greeting.hello
-    },
-    potato: {
-      "=1": "1 Kartoffel",
-      ">=2": "2+ Kartoffeln",
-      ">=5": "Viele Kartoffeln",
-    },
-    fullGreeting: "Hallo {{ name }}",
-    fallback: {
-      key: "Key",
-      "*": "Fallback",
-    },
-  },
-};
-
 function createWrapper(locale: string) {
   return function Provider({ children }: PropsWithChildren) {
     return <HooklationProvider locale={locale}>{children}</HooklationProvider>;
@@ -49,13 +14,21 @@ it("throws outside of HooklationProvider", () => {
   const originalError = console.error;
   console.error = vi.fn();
 
-  expect(() => renderHook(() => useHooklation(translations))).toThrow();
+  expect(() => renderHook(() => useHooklation({}))).toThrow();
 
   console.error = originalError;
 });
 
 describe("t", () => {
   it("returns key for unknown locale", () => {
+    const translations = {
+      en: {
+        title: "Welcome!",
+        greeting: {
+          hello: "Hello",
+        },
+      },
+    };
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("fr"),
     });
@@ -65,6 +38,14 @@ describe("t", () => {
   });
 
   it("returns key for unknown key", () => {
+    const translations = {
+      en: {
+        title: "Welcome!",
+        greeting: {
+          hello: "Hello",
+        },
+      },
+    };
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("en"),
     });
@@ -82,6 +63,14 @@ describe("t", () => {
   });
 
   it("returns key for unknown key and prefix", () => {
+    const translations = {
+      en: {
+        title: "Welcome!",
+        greeting: {
+          hello: "Hello",
+        },
+      },
+    };
     const { result } = renderHook(
       () => useHooklation(translations, { prefix: "greeting" }),
       { wrapper: createWrapper("en") }
@@ -92,6 +81,14 @@ describe("t", () => {
   });
 
   it("returns translation", () => {
+    const translations = {
+      en: {
+        title: "Welcome!",
+        greeting: {
+          hello: "Hello",
+        },
+      },
+    };
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("en"),
     });
@@ -101,6 +98,13 @@ describe("t", () => {
   });
 
   it("returns translation with prefix", () => {
+    const translations = {
+      en: {
+        greeting: {
+          hello: "Hello",
+        },
+      },
+    };
     const { result } = renderHook(
       () => useHooklation(translations, { prefix: "greeting" }),
       { wrapper: createWrapper("en") }
@@ -110,6 +114,15 @@ describe("t", () => {
   });
 
   it("returns plural form", () => {
+    const translations = {
+      de: {
+        potato: {
+          "=1": "1 Kartoffel",
+          ">=2": "2+ Kartoffeln",
+          ">=5": "Viele Kartoffeln",
+        },
+      },
+    };
     const { result } = renderHook(() => useHooklation(translations), {
       wrapper: createWrapper("de"),
     });
