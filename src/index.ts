@@ -12,4 +12,5 @@ export {
   Key,
   KeyPartSeparator,
   KeyPrefix,
+  PrefixedKey,
 } from "./types/index.js";
