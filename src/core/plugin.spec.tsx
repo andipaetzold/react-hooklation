@@ -29,7 +29,12 @@ it("events.missingKey", () => {
   // @ts-expect-error We are explicitely passing a wrong key
   result.current("bye");
 
-  expect(missingKeyHandler).toHaveBeenCalledWith({ locale: "en", key: "bye" });
+  expect(missingKeyHandler).toHaveBeenCalledWith(
+    expect.objectContaining({
+      locale: "en",
+      key: "bye",
+    })
+  );
 });
 
 it("events.missingLocale", () => {
@@ -45,7 +50,9 @@ it("events.missingLocale", () => {
 
   result.current("hello");
 
-  expect(missingLocaleHandler).toHaveBeenCalledWith({ locale: "de" });
+  expect(missingLocaleHandler).toHaveBeenCalledWith(
+    expect.objectContaining({ locale: "de" })
+  );
 });
 
 it("transformValue", () => {

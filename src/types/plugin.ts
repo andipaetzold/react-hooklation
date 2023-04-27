@@ -1,4 +1,5 @@
 import { Config } from "./Config.js";
+import { MissingKeyError, MissingLocaleError } from "./errors.js";
 
 export interface HooklationPlugin {
   events?: {
@@ -10,8 +11,8 @@ export interface HooklationPlugin {
 }
 
 export interface HooklationEventDetails {
-  missingKey: { locale: string; key: string };
-  missingLocale: { locale: string };
+  missingKey: MissingKeyError;
+  missingLocale: MissingLocaleError;
 }
 
 export interface HooklationEventEmitter {

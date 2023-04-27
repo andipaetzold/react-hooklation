@@ -6,6 +6,8 @@ import {
   HooklationTranslation,
   HooklationTranslations,
   KeyPrefix,
+  MissingKeyError,
+  MissingLocaleError,
   PrefixedKey,
 } from "../types/index.js";
 import { useHooklationContext } from "./useHooklationContext.js";
@@ -39,13 +41,13 @@ export function useHooklation<
     ): TReturnValue => {
       const key = prefix ? `${prefix}${SEPARATOR}${keySuffix}` : keySuffix;
       if (!translation) {
-        emitEvent("missingLocale", { locale });
+        emitEvent("missingLocale", new MissingLocaleError(locale));
         return key as TReturnValue;
       }
 
       const value = getTranslation(translation, key, context);
       if (value === undefined) {
-        emitEvent("missingKey", { locale, key });
+        emitEvent("missingKey", new MissingKeyError(locale, key));
         return key as TReturnValue;
       }
 

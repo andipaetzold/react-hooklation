@@ -1,5 +1,6 @@
 export * from "./Config.js";
 export * from "./constants.js";
+export * from "./errors.js";
 export * from "./HooklationTranslation.js";
 export * from "./HooklationTranslations.js";
 export * from "./Key.js";
