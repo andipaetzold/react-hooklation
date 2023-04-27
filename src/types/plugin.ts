@@ -15,13 +15,6 @@ export interface HooklationEventDetails {
   missingLocale: MissingLocaleError;
 }
 
-export interface HooklationEventEmitter {
-  <T extends keyof HooklationEventDetails>(
-    event: T,
-    detail: HooklationEventDetails[T]
-  ): void;
-}
-
 export type HooklationTransformValue<T = unknown, U = unknown> = (params: {
   locale: Config["locale"];
   key: string;
