@@ -19,20 +19,23 @@ export interface TranslateOptions<TTranslation extends HooklationTranslation> {
   plugins?: ReadonlyArray<HooklationPlugin>;
 }
 
-export function translate<TTranslation extends HooklationTranslation>({
+export function translate<
+  TReturnValue extends Config["returnValue"],
+  TTranslation extends HooklationTranslation
+>({
   locale,
   key,
   translations,
   context = {},
   plugins = [],
-}: TranslateOptions<TTranslation>): Config["returnValue"] {
+}: TranslateOptions<TTranslation>): TReturnValue {
   const translation = translations[locale];
 
   if (!translation) {
     plugins.forEach((p) =>
       p.events?.missingLocale?.(new MissingLocaleError(locale))
     );
-    return key;
+    return key as string as TReturnValue;
   }
 
   const value = getTranslation(translation, key, context);
@@ -40,7 +43,7 @@ export function translate<TTranslation extends HooklationTranslation>({
     plugins.forEach((p) =>
       p.events?.missingKey?.(new MissingKeyError(locale, key))
     );
-    return key;
+    return key as string as TReturnValue;
   }
 
   return plugins.reduce(
@@ -52,7 +55,7 @@ export function translate<TTranslation extends HooklationTranslation>({
         value,
       }) ?? value,
     value as unknown
-  ) as Config["returnValue"];
+  ) as TReturnValue;
 }
 
 function getTranslation(

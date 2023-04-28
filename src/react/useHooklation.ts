@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { SEPARATOR } from "../constants.js";
+import { translate } from "../core/translate.js";
 import {
   Config,
   Context,
@@ -9,7 +10,6 @@ import {
   KeyPrefix,
   PrefixedKey,
 } from "../types/index.js";
-import { translate } from "../core/translate.js";
 import { useHooklationContext } from "./useHooklationContext.js";
 
 export interface UseHooklationOptions<
@@ -29,10 +29,10 @@ export function useHooklation<
   const { locale, plugins } = useHooklationContext();
 
   return useCallback(
-    (
+    <TReturnValue extends Config["returnValue"]>(
       keySuffix: PrefixedKey<TTranslation, TPrefix>,
       context: Context = {}
-    ): Config["returnValue"] => {
+    ): TReturnValue => {
       const key = (
         prefix ? `${prefix}${SEPARATOR}${keySuffix}` : keySuffix
       ) as Key<TTranslation>;
@@ -43,7 +43,7 @@ export function useHooklation<
         translations,
         context,
         plugins,
-      }) as Config["returnValue"];
+      }) as TReturnValue;
     },
     [prefix, locale, translations, plugins]
   );
