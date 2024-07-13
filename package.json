@@ -51,7 +51,7 @@
     "happy-dom": "12.10.3",
     "husky": "9.0.11",
     "lint-staged": "15.1.0",
-    "prettier": "2.8.8",
+    "prettier": "3.3.3",
     "react": "18.2.0",
     "rimraf": "5.0.5",
     "semantic-release": "22.0.8",
